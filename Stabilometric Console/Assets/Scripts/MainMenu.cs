@@ -24,5 +24,6 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        Debug.Log("Rage Quited"); //Check the console, editor ignores Application.Quit()
     }
 }
