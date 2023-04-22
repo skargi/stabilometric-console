@@ -11,14 +11,20 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Runner Game"); // Alternatively, Could just call the game scene by its name (ie a string -> .LoadScene("[name]"))
     }
 
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void GoToSettingsMenu()
     {
         SceneManager.LoadScene("Settings Menu");
     }
 
-    public void GoToMainMenu()
+
+    public void GoToDeathMenu()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene("Death Menu");
     }
 
     public void QuitGame()

@@ -35,13 +35,19 @@ public class PlayerMovement : MonoBehaviour {
     {
         alive = false;
         // Restart the game
-        Invoke("Restart", 2);
+        //Invoke("Restart", 2);  // Replay button will restart the game; the Restart() function is no longer needed.
+        SceneManager.LoadScene("Death Menu");
     }
 
-    void Restart ()
+    /* void Restart ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // this line just restarts the game. instead we want to load the death menu.
+        SceneManager.LoadScene("Death Menu");
+    } */
+
+    // TODO: apply the changes above to the code below. or better yet, just have some conditional above that switches between the joystick and keyboard control.
+    // One approach is to put if statements in each of the functions that change, and then put both versions of the code in. Or another approach is two have two versions
+    // of each of those functions so the functions stay a bit cleaner, but would have to change code in GameManager.cs or whatever. [delete this comment later]
 }
 
 // TOGGLE BTWN KEYBOARD AND JOYSTICK
