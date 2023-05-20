@@ -1,6 +1,6 @@
-﻿#define KEYBOARD   //modes: KEYBOARD, JOYSTICK, LOADCELL (only toggle one at a time)
+﻿//#define KEYBOARD   //modes: KEYBOARD, JOYSTICK, LOADCELL (only toggle one at a time)
 //#define JOYSTICK
-//#define LOADCELL
+#define LOADCELL
 
 #if KEYBOARD
     // Keyboard controls
@@ -115,12 +115,12 @@
 
         private void Update () {
             receivedstring = data_stream.ReadLine();
-            //Debug.Log(receivedstring);
+            Debug.Log("receivedstring: " + receivedstring);
             string[] datas = receivedstring.Split(',');  
-            //Debug.Log(datas[0]);
+            Debug.Log("datas[0]: " + datas[0]);
 
             horizontalInput = float.Parse(datas[1]) * 0.001f * -1;
-            Debug.Log(horizontalInput);
+            Debug.Log("horzintalInput" + horizontalInput);
             verticalInput = float.Parse(datas[0]) * 0.002f * -1;  //forward/backward input
 
             if (transform.position.y < -5) {
@@ -170,7 +170,7 @@
 
         public float speedIncreasePerPoint = 0.1f;
 
-        SerialPort data_stream = new SerialPort("COM3", 9600);
+        SerialPort data_stream = new SerialPort("COM4", 9600);
         public string receivedstring;
         public GameObject test_data;
         //public Rigidbody rb;
@@ -178,6 +178,10 @@
         public float sensitivity = 0.01f;
 
         public string[] datas;
+
+        float basef1, basef2, basef3, basef4;
+        // float f1, f2, f3, f4;
+        // f1 = 0; f2 = 0; f3 = 0; f4 = 0;
 
         void Start()
         {
@@ -199,19 +203,27 @@
 
         private void Update () {
             float f1, f2, f3, f4;
-            float length = 5;
+            float length = 5;  //effectively just a scaling constant
+            f1 = 0; f2 = 0; f3 = 0; f4 = 0;
 
             receivedstring = data_stream.ReadLine();
-            //Debug.Log(receivedstring);
+            Debug.Log(receivedstring);  //comment out
             string[] datas = receivedstring.Split(',');
             f1 = float.Parse(datas[0]);
+            if(f1 < 5) {f1 = 0;}
             f2 = float.Parse(datas[1]);
-            //f3 = float.Parse(datas[2]);  //uncomment
-            //f4 = float.Parse(datas[3]);  //uncomment
+            if(f2 < 5) {f2 = 0;}
+            f3 = float.Parse(datas[2]);  //uncomment
+            if(f3 < 5) {f3 = 0;}
+            f4 = float.Parse(datas[3]);  //uncomment
+            if(f4 < 5) {f4 = 0;}
+            Debug.Log(f1 + ", " + f2 + ", " + f3 + ", " + f4);  //comment out
 
-            horizontalInput = f2 / 1000 * -1;   //comment out
-            //horizontalInput = ((f1 + f2 - f3 - f4) / (f1 + f2 + f3 + f4)) * (length / 2);     //uncomment, length/2 is just a scaling constant
-            Debug.Log(horizontalInput);
+            //horizontalInput = f2 / 1000 * -1;   //comment out
+            float tempscale = 0.1f;
+            horizontalInput = ((f1 + f2 - f3 - f4) / (f1 + f2 + f3 + f4)) * tempscale;     //uncomment, length/2 is just a scaling constant
+            horizontalInput = horizontalInput * -1;
+            Debug.Log("horiztonalInput: " + horizontalInput);
 
             if (transform.position.y < -5) {
                 Die();
